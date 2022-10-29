@@ -12,7 +12,7 @@ class Order(Base):
     title = Column(String(), nullable=False)
     description = Column(String())
     user_id = Column(Integer(), ForeignKey('users.id'))
-    date_placed = Column(DateTime(), default=datetime.now)
+    updated_on = Column(DateTime(), default=datetime.now)
     user = relationship("User", backref='orders')
 
     def __str__(self):

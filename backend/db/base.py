@@ -41,9 +41,3 @@ async def init_models():
 async def get_session():
     async with async_session() as session:
         yield session
-
-
-import asyncio
-
-if __name__ == '__main__':
-    asyncio.run(init_models())
