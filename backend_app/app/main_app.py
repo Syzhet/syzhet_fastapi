@@ -1,10 +1,7 @@
-from backend_app import config
-
 from fastapi import FastAPI
 import uvicorn
 
-
-
+from backend_app.config import base_config
 
 app = FastAPI()
 
