@@ -11,9 +11,9 @@ class Order(Base):
     id = Column(Integer(), primary_key=True)
     title = Column(String(), nullable=False)
     description = Column(String())
-    userr_id = Column(Integer(), ForeignKey('users.id'))
+    user_id = Column(Integer(), ForeignKey('users.id'))
     date_placed = Column(DateTime(), default=datetime.now)
-    user = relationship("User", backref='order')
+    user = relationship("User", backref='orders')
 
     def __str__(self):
         return f'id: {self.id}, title: {self.title}'

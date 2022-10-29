@@ -10,7 +10,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer(), primary_key=True, unique=True)
-    username = Column(String(50), nullable=False)
+    username = Column(String(100), nullable=False)
     created_on = Column(DateTime(), default=datetime.now)
     updated_on = Column(
         DateTime(),
