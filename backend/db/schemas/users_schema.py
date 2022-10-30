@@ -4,15 +4,14 @@ from pydantic import BaseModel
 
 
 class UserBase(BaseModel):
-    id: int
     username: str
 
 
 class UserCreate(UserBase):
-    pass
+    telegram_id: int
 
 
-class UserGet(UserBase):
+class UserGet(UserCreate):
     updated_on: datetime
 
     class Config:

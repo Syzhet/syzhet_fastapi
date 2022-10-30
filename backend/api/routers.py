@@ -1,6 +1,4 @@
-from fastapi import APIRouter, Depends
-
-from backend.db.base import get_session
+from fastapi import APIRouter
 
 from .user_router import user_router
 
