@@ -1,7 +1,8 @@
-from .base import async_session, init_models
+from .base import async_session, init_models, engine
 import asyncio
 from sqlalchemy import select
 from .models.users import User
+from .models.orders import Order
 
 
 session = async_session()
@@ -22,5 +23,6 @@ async def main():
     await asyncio.sleep(5)
     print('get session ok')
     await test(session)
+
 
 asyncio.run(main())

@@ -18,4 +18,4 @@ class Order(Base):
     __mapper_args__ = {"eager_defaults": True}
 
     def __str__(self):
-        return f'id: {self.id}, title: {self.title}'
+        return f'id: {self.id}, title: {self.title}, user_id: {self.user_id}'

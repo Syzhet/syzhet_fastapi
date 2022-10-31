@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
-from backend.db.schemas.users_schema import UserCreate, UserGet
+from backend.db.schemas.orders_schema import OrderGet, OrderCreate
 from backend.db.crud import (
     get_list,
     get_obj,
@@ -12,67 +12,67 @@ from backend.db.crud import (
     update_obj,
     delete_obj
 )
-from backend.db.models.users import User
+from backend.db.models.orders import Order
 
 
-user_router = APIRouter(
-    prefix='/users',
-    tags=['Users']
+order_router = APIRouter(
+    prefix='/orders',
+    tags=['Orders']
 )
 
 
-@user_router.get('/', response_model=List[UserGet])
+@order_router.get('/', response_model=List[OrderGet])
 async def get_users(
     session: AsyncSession = Depends(get_session),
     limit: Optional[str] = None
 ):
-    users = await get_list(session=session, model=User, limit=limit)
-    return users
+    orders = await get_list(session=session, model=Order, limit=limit)
+    return orders
 
 
-@user_router.get('/{id}', response_model=UserGet)
+@order_router.get('/{id}', response_model=OrderGet)
 async def get_user(id: int, session: AsyncSession = Depends(get_session)):
-    user = await get_obj(session=session, id=id, model=User)
-    return user
+    order = await get_obj(session=session, id=id, model=Order)
+    return order
 
 
-@user_router.post(
+@order_router.post(
     '/',
-    response_model=UserGet,
+    response_model=OrderGet,
     status_code=status.HTTP_201_CREATED
 )
 async def create_user(
-    data: UserCreate,
+    data: OrderCreate,
     session: AsyncSession = Depends(get_session)
 ):
 
-    user = await create_obj(
+    order = await create_obj(
         session=session,
         data=data,
-        model=User
+        model=Order
     )
-    return user
+    return order
 
 
-@user_router.put(
+@order_router.put(
     '/{id}',
-    response_model=UserGet,
+    response_model=OrderGet,
     status_code=status.HTTP_201_CREATED
 )
 async def update_user(
     id: int,
-    data: UserCreate,
+    data: OrderCreate,
     session: AsyncSession = Depends(get_session)
 ):
     return await update_obj(
         session=session,
-        model=User,
+        model=Order,
         data=data,
         id=id
     )
 
 
-@user_router.delete(
+@order_router.delete(
     '/{id}',
     status_code=status.HTTP_204_NO_CONTENT
 )
@@ -82,7 +82,7 @@ async def delete_user(
 ):
     await delete_obj(
         session=session,
-        model=User,
+        model=Order,
         id=id
     )
     return Response(content='Объект удален')

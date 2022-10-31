@@ -12,6 +12,7 @@ class UserCreate(UserBase):
 
 
 class UserGet(UserCreate):
+    id: int
     updated_on: datetime
 
     class Config:
