@@ -14,9 +14,16 @@ class DbConfig(BaseModel):
     db_port: str
 
 
+class AdminConfig(BaseModel):
+    secret_key: str
+    algoritm: str
+    token_expire: int
+
+
 class BaseConfig(BaseSettings):
     app: AppConfig
     db: DbConfig
+    admin: AdminConfig
 
     class Config:
         env_nested_delimiter = '__'
