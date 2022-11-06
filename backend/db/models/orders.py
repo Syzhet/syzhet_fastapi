@@ -13,7 +13,7 @@ class Order(Base):
     description = Column(String())
     user_id = Column(Integer(), ForeignKey('users.id'))
     updated_on = Column(DateTime(), server_default=func.now())
-    user = relationship("User", backref='user_orders')
+    user = relationship("User", backref='user_orders', lazy='joined')
 
     __mapper_args__ = {"eager_defaults": True}
 

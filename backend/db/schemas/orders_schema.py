@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, BaseConfig
 
-from .users_schema import UserGet
+from ..schemas.users_schema import UserGet
 
 
 class OrderBase(BaseModel):
@@ -17,7 +17,8 @@ class OrderCreate(OrderBase):
 class OrderGet(OrderCreate):
     id: int
     updated_on: datetime
-    # user: UserGet - для отображения юзера, сделавшего этот заказ
+    user: UserGet
 
     class Config:
+        BaseConfig.arbitrary_types_allowed = True
         orm_mode = True

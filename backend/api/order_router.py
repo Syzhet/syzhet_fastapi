@@ -22,7 +22,7 @@ order_router = APIRouter(
 
 
 @order_router.get('/', response_model=List[OrderGet])
-async def get_users(
+async def get_orders(
     session: AsyncSession = Depends(get_session),
     limit: Optional[str] = None
 ):
@@ -31,17 +31,16 @@ async def get_users(
 
 
 @order_router.get('/{id}', response_model=OrderGet)
-async def get_user(id: int, session: AsyncSession = Depends(get_session)):
+async def get_order(id: int, session: AsyncSession = Depends(get_session)):
     order = await get_obj(session=session, id=id, model=Order)
     return order
 
 
 @order_router.post(
     '/',
-    response_model=OrderGet,
     status_code=status.HTTP_201_CREATED
 )
-async def create_user(
+async def create_order(
     data: OrderCreate,
     session: AsyncSession = Depends(get_session)
 ):
@@ -59,7 +58,7 @@ async def create_user(
     response_model=OrderGet,
     status_code=status.HTTP_201_CREATED
 )
-async def update_user(
+async def update_order(
     id: int,
     data: OrderCreate,
     session: AsyncSession = Depends(get_session)
@@ -76,7 +75,7 @@ async def update_user(
     '/{id}',
     status_code=status.HTTP_204_NO_CONTENT
 )
-async def delete_user(
+async def delete_order(
     id: int,
     session: AsyncSession = Depends(get_session)
 ):
