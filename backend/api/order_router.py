@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
-from backend.db.schemas.orders_schema import OrderGet, OrderCreate
+from backend.db.schemas.orders_schema import OrderGet, OrderCreate, OrderUpdate
 from backend.db.crud import (
     get_list,
     get_obj,
@@ -60,7 +60,7 @@ async def create_order(
 )
 async def update_order(
     id: int,
-    data: OrderCreate,
+    data: OrderUpdate,
     session: AsyncSession = Depends(get_session)
 ):
     return await update_obj(

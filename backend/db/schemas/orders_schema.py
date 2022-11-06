@@ -22,3 +22,7 @@ class OrderGet(OrderCreate):
     class Config:
         BaseConfig.arbitrary_types_allowed = True
         orm_mode = True
+
+
+class OrderUpdate(OrderBase):
+    pass
