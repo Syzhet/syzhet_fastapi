@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Response, status
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
@@ -84,4 +85,4 @@ async def delete_order(
         model=Order,
         id=id
     )
-    return Response(content='Объект удален')
+    return Response(content='Объект удален', media_type="text/plain")
