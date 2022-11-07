@@ -14,11 +14,13 @@ from backend.db.crud import (
     delete_obj
 )
 from backend.db.models.orders import Order
+from ..auth.token import check_access_token
 
 
 order_router = APIRouter(
     prefix='/orders',
-    tags=['Orders']
+    tags=['Orders'],
+    dependencies=[Depends(check_access_token)]
 )
 
 

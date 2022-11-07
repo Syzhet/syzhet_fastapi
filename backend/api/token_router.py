@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..db.schemas.token_schema import Token, TokenCreate
+from ..db.schemas.token_schema import Token
 from ..db.base import get_session
 from ..auth.auth import authenticate_admin
 from ..auth.token import create_access_token
@@ -16,7 +17,7 @@ token_router = APIRouter(
 
 @token_router.post('/', response_model=Token)
 async def get_token(
-    data: TokenCreate,
+    data: OAuth2PasswordRequestForm = Depends(),
     session: AsyncSession = Depends(get_session)
 ):
     admin = await authenticate_admin(
@@ -30,7 +31,7 @@ async def get_token(
             detail='Bad usernmae or password'
         )
     access_token = create_access_token(
-        data={"sub": [admin.username, admin.hashed_password]}
+        data={"sub": admin.username + admin.hashed_password}
     )
     await session.commit()
     return {"access_token": access_token, "token_type": "bearer"}

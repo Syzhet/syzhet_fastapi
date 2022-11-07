@@ -3,6 +3,7 @@ import asyncio
 from sqlalchemy import select
 from .models.users import User
 from .models.admin import Admin
+from .models.orders import Order
 from ..auth.auth import get_password_hash
 
 
