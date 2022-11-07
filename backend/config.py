@@ -18,6 +18,7 @@ class AdminConfig(BaseModel):
     secret_key: str
     algoritm: str
     token_expire: int
+    delimetr: str
 
 
 class BaseConfig(BaseSettings):

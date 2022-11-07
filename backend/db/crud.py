@@ -53,7 +53,7 @@ async def create_obj(
     except IntegrityError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='This object is already exists'
+            detail='Error in data or this object is already exists'
         )
     return object
 

@@ -18,6 +18,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/token")
 SECRET_KEY = base_config.admin.secret_key
 ALGORITHM = base_config.admin.algoritm
 TOKEN_EXPIRE = base_config.admin.token_expire
+DELIMETR = base_config.admin.delimetr
 
 
 def create_access_token(
@@ -58,7 +59,7 @@ async def check_access_token(
         raise credentials_exception
     if not userdata:
         raise credentials_exception
-    username = userdata.split('$')[0]
+    username = userdata.split(DELIMETR)[0]
     print(username)
     query = select(Admin).where(
         Admin.username == username,
