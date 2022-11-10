@@ -15,6 +15,8 @@ class DbConfig(BaseModel):
 
 
 class AdminConfig(BaseModel):
+    login: str
+    password: str
     secret_key: str
     algoritm: str
     token_expire: int
