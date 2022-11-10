@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  syzdb:
+  db:
     image : postgres:${DB_TAG}
     restart: always
     ports:
@@ -20,10 +20,13 @@ services:
   #   depends_on:
   #     - vkdb
 
-  # vkbot:
-  #   image: syzhet/coocking_vk_bot:latest
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   depends_on:
-  #     - vknginx
+  api:
+    build: ..
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - ${APP__APP_PORT}:8000
+    depends_on:
+      - db
