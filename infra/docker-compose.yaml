@@ -6,27 +6,25 @@ services:
     restart: always
     ports:
       - ${POSTGRES_PORT}:5432
-    # volumes:
-    #   - vkbot_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
 
-  # vknginx:
-  #   image: nginx:1.19.3
-  #   volumes:
-  #     - ./images:/usr/share/nginx/html/
-  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
-  #   restart: always
-  #   depends_on:
-  #     - vkdb
+  nginx:
+    image: nginx:1.19.3
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - api
 
   api:
     build: ..
-    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
     restart: always
     env_file:
       - .env
-    ports:
-      - ${APP__APP_PORT}:8000
+    # ports:
+    #   - ${APP__APP_PORT}:8000
     depends_on:
       - db
