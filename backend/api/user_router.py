@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
-from backend.db.schemas.users_schema import UserCreate, UserGet
+from backend.db.schemas.users_schema import UserCreate, UserGet, UserWithOrder
 from backend.db.crud import (
-    get_list,
+    get_user_list,
     get_obj,
     create_obj,
     update_obj,
@@ -23,16 +23,16 @@ user_router = APIRouter(
 )
 
 
-@user_router.get('/', response_model=List[UserGet])
+@user_router.get('/', response_model=List[UserWithOrder])
 async def get_users(
     session: AsyncSession = Depends(get_session),
     limit: Optional[str] = None
 ):
-    users = await get_list(session=session, model=User, limit=limit)
+    users = await get_user_list(session=session, model=User, limit=limit)
     return users
 
 
-@user_router.get('/{id}', response_model=UserGet)
+@user_router.get('/{id}', response_model=UserWithOrder)
 async def get_user(id: int, session: AsyncSession = Depends(get_session)):
     user = await get_obj(session=session, id=id, model=User)
     return user

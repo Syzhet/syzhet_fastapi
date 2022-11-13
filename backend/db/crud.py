@@ -6,6 +6,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import delete
+from sqlalchemy.orm import selectinload
 
 from .models.users import User
 from .models.orders import Order
@@ -13,12 +14,25 @@ from .schemas.users_schema import UserCreate
 from .schemas.orders_schema import OrderCreate
 
 
-async def get_list(
+async def get_user_list(
     session: AsyncSession,
-    model: Union[User, Order],
+    model: User,
     limit: int = None
 ):
-    query = select(model).order_by(model.updated_on.desc())
+    query = select(model).options(selectinload(model.orders))
+    if limit:
+        query = query.limit(limit)
+    result = await session.execute(query.order_by(model.updated_on.desc()))
+    await session.commit()
+    return result.scalars().all()
+
+
+async def get_order_list(
+    session: AsyncSession,
+    model: Order,
+    limit: int = None
+):
+    query = select(model).options(selectinload(model.user))
     if limit:
         query = query.limit(limit)
     result = await session.execute(query)

@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from backend.db.base import get_session
 from backend.db.schemas.orders_schema import OrderGet, OrderCreate, OrderUpdate
 from backend.db.crud import (
-    get_list,
+    get_order_list,
     get_obj,
     create_obj,
     update_obj,
@@ -29,7 +29,7 @@ async def get_orders(
     session: AsyncSession = Depends(get_session),
     limit: Optional[str] = None
 ):
-    orders = await get_list(session=session, model=Order, limit=limit)
+    orders = await get_order_list(session=session, model=Order, limit=limit)
     return orders
 
 

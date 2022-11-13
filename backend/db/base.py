@@ -17,11 +17,6 @@ DATABASE_URL = (
     f"postgresql+asyncpg://{PG_USER}:{PG_PASS}@{PG_HOST}:{PG_PORT}/{DATABASE}"
 )
 
-# DATABASE_URL = (
-#     "postgresql+asyncpg://test:test@localhost:5432/syzhet"
-# )
-
-
 engine = create_async_engine(DATABASE_URL, echo=True)
 
 async_session = sessionmaker(

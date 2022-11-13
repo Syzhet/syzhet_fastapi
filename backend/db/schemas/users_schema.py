@@ -1,6 +1,7 @@
 from datetime import datetime
+from typing import List
 
-from pydantic import BaseConfig, BaseModel
+from pydantic import BaseModel
 
 
 class UserBase(BaseModel):
@@ -11,10 +12,27 @@ class UserCreate(UserBase):
     telegram_id: int
 
 
+class UserOrder(BaseModel):
+    id: int
+    title: str
+    description: str
+
+    class Config:
+        orm_mode = True
+
+
+class UserWithOrder(UserCreate):
+    id: int
+    updated_on: datetime
+    orders: List[UserOrder]
+
+    class Config:
+        orm_mode = True
+
+
 class UserGet(UserCreate):
     id: int
     updated_on: datetime
 
     class Config:
-        BaseConfig.arbitrary_types_allowed = True
         orm_mode = True
