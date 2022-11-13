@@ -28,13 +28,10 @@ def create_access_token(
     SECRET_KEY и алгоритма шифрования: ALGORITHM)
     """
 
-    print('create_access_token: ', data)
-    print('create_access_token: ', type(data))
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=TOKEN_EXPIRE)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    print('encoded_jwt: ', encoded_jwt)
     return encoded_jwt
 
 
@@ -42,8 +39,7 @@ async def check_access_token(
     token: str = Depends(oauth2_scheme),
     session: AsyncSession = Depends(get_session)
 ):
-    print('start check_access_token------------')
-    print('check_access_token - session: ', session)
+
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -51,15 +47,12 @@ async def check_access_token(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        print('payload: ', payload)
         userdata: List[str] = payload.get("sub")
-        print('userdata: ', userdata)
     except JWTError:
         raise credentials_exception
     if not userdata:
         raise credentials_exception
     username = userdata.split(DELIMETR)[0]
-    print(username)
     query = select(Admin).where(
         Admin.username == username,
     )

@@ -29,7 +29,7 @@ async def get_admin(session: AsyncSession, username: str):
     if not admin:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Bad usernmae or password'
+            detail='Bad username or password'
         )
     return admin
 

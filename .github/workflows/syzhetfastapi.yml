@@ -1,4 +1,4 @@
-name: restcalc workflow
+name: syzhetfastapi workflow
 
 on: 
   push:
