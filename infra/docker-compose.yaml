@@ -10,7 +10,7 @@ services:
       - .env
 
   nginx:
-    image: nginx:1.19.3
+    image: nginx:${NGINX_TAG}
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     restart: always
@@ -20,7 +20,7 @@ services:
       - api
 
   api:
-    build: ..
+    image: ${DOCKER_USERNAME}/syzhet_fastapi:${API_TAG}
     restart: always
     env_file:
       - .env
