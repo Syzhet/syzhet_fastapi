@@ -1,10 +1,8 @@
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 from backend.config import base_config
-
 
 PG_USER = base_config.db.db_user
 PG_PASS = base_config.db.db_password

@@ -1,9 +1,8 @@
 from fastapi import APIRouter
 
-from .user_router import user_router
 from .order_router import order_router
 from .token_router import token_router
-
+from .user_router import user_router
 
 router = APIRouter()
 

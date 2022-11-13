@@ -1,16 +1,15 @@
 from datetime import datetime, timedelta
 from typing import List
 
-from jose import jwt, JWTError
-from fastapi import Depends, status, HTTPException
+from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..config import base_config
 from ..db.base import get_session
 from ..db.models.admin import Admin
-
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/token")
 

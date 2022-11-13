@@ -4,17 +4,12 @@ from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
-from backend.db.schemas.users_schema import UserCreate, UserGet, UserWithOrder
-from backend.db.crud import (
-    get_user_list,
-    get_obj,
-    create_obj,
-    update_obj,
-    delete_obj
-)
+from backend.db.crud import (create_obj, delete_obj, get_obj, get_user_list,
+                             update_obj)
 from backend.db.models.users import User
-from ..auth.token import check_access_token
+from backend.db.schemas.users_schema import UserCreate, UserGet, UserWithOrder
 
+from ..auth.token import check_access_token
 
 user_router = APIRouter(
     prefix='/users',

@@ -1,12 +1,9 @@
 import asyncio
 
-from .base import async_session
-
-from .models.admin import Admin
-
 from ..auth.auth import get_password_hash
 from ..config import base_config
-
+from .base import async_session
+from .models.admin import Admin
 
 ADMIN_LOGIN = base_config.admin.login
 ADMIN_PASSWORD = base_config.admin.password

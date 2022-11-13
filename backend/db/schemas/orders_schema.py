@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, BaseConfig
+from pydantic import BaseConfig, BaseModel
 
 from ..schemas.users_schema import UserGet
 

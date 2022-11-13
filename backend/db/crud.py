@@ -1,17 +1,15 @@
 from typing import Union
 
 from fastapi import HTTPException, status
-
-from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import delete
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from .models.users import User
 from .models.orders import Order
-from .schemas.users_schema import UserCreate
+from .models.users import User
 from .schemas.orders_schema import OrderCreate
+from .schemas.users_schema import UserCreate
 
 
 async def get_user_list(

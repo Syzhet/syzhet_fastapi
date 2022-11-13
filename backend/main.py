@@ -1,9 +1,9 @@
-from fastapi import FastAPI
 # from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
+from fastapi import FastAPI
 
-from .config import base_config
 from .api.routers import router
+from .config import base_config
 
 app = FastAPI()
 
