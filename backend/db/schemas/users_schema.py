@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseConfig, BaseModel
 
 
 class UserBase(BaseModel):
@@ -16,4 +16,5 @@ class UserGet(UserCreate):
     updated_on: datetime
 
     class Config:
+        BaseConfig.arbitrary_types_allowed = True
         orm_mode = True
