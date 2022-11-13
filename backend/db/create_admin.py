@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 from sqlalchemy.exc import IntegrityError
 
@@ -6,6 +7,15 @@ from ..auth.auth import get_password_hash
 from ..config import base_config
 from .base import async_session
 from .models.admin import Admin
+
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=(
+        u'%(filename)s:%(lineno)d: '
+        u'#%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s'
+    )
+)
 
 ADMIN_LOGIN = base_config.admin.login
 ADMIN_PASSWORD = base_config.admin.password
@@ -20,7 +30,7 @@ async def create_admin():
             try:
                 await session.commit()
             except IntegrityError:
-                print('Admin already exists')
+                logging.info('Admin already existts')
 
 
 async def main():
