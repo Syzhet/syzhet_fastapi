@@ -8,7 +8,6 @@ from ..config import base_config
 from .base import async_session
 from .models.admin import Admin
 
-
 logging.basicConfig(
     level=logging.INFO,
     format=(
