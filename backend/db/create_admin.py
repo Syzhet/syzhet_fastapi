@@ -1,5 +1,7 @@
 import asyncio
 
+from sqlalchemy.exc import IntegrityError
+
 from ..auth.auth import get_password_hash
 from ..config import base_config
 from .base import async_session
@@ -15,7 +17,10 @@ async def create_admin():
     async with async_session() as session:
         async with session.begin():
             session.add(admin)
-            await session.commit()
+            try:
+                await session.commit()
+            except IntegrityError:
+                print('Admin already exists')
 
 
 async def main():
