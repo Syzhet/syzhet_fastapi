@@ -29,8 +29,6 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/:rw
     depends_on:
       - api
-    env_file:
-      - .env
 
   api:
     image: ${DOCKER_USERNAME}/syzhet_fastapi:${API_TAG}
