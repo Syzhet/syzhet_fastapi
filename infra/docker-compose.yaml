@@ -35,7 +35,5 @@ services:
     restart: always
     env_file:
       - .env
-    # ports:
-    #   - ${APP__APP_PORT}:8000
     depends_on:
       - db
