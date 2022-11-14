@@ -29,8 +29,8 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/:rw
     depends_on:
       - api
-    environment:
-      CERTBOT_EMAIL: click742@yandex.ru
+    env_file:
+      - .env
 
   api:
     image: ${DOCKER_USERNAME}/syzhet_fastapi:${API_TAG}

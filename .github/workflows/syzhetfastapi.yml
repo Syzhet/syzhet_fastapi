@@ -95,6 +95,8 @@ jobs:
 
             echo DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} >> .env
 
+            echo CERTBOT_EMAIL=${{ secrets.CERTBOT_EMAIL }} >> .env
+
             sudo docker-compose build --no-cache
             sudo docker-compose up -d --build
 
