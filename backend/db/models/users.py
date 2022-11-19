@@ -22,6 +22,7 @@ class User(Base):
         "Order",
         back_populates='user',
         cascade='save-update, merge, delete',
+        passive_deletes=True,
         lazy='joined'
     )
 
