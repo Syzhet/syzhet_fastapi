@@ -4,6 +4,8 @@ services:
   db:
     image : postgres:${DB_TAG}
     restart: always
+    volumes:
+      - syzhet_fastapi_postgres_data:/var/lib/postgresql/data/
     env_file:
       - .env
 
@@ -35,3 +37,6 @@ services:
       - .env
     depends_on:
       - db
+
+volumes:
+      - syzhet_fastapi_postgres_data;
