@@ -39,4 +39,4 @@ services:
       - db
 
 volumes:
-      - syzhet_fastapi_postgres_data;
+    syzhet_fastapi_postgres_data:
