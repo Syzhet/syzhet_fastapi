@@ -11,7 +11,7 @@ class Order(Base):
     id = Column(Integer(), primary_key=True)
     title = Column(String(), nullable=False)
     description = Column(String())
-    user_id = Column(Integer(), ForeignKey('users.id'))
+    user_id = Column(Integer(), ForeignKey('users.id'), ondelete='CASCADE')
     updated_on = Column(DateTime(), server_default=func.now())
     user = relationship("User", back_populates='orders', lazy='joined')
 
