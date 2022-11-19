@@ -21,7 +21,7 @@ class User(Base):
     orders = relationship(
         "Order",
         back_populates='user',
-        cascade="all, delete",
+        cascade='save-update, merge, delete',
         lazy='joined'
     )
 
