@@ -18,7 +18,12 @@ class User(Base):
         server_onupdate=func.now()
     )
     is_admin = Column(Boolean(), default=False)
-    orders = relationship("Order", back_populates='user', lazy='joined')
+    orders = relationship(
+        "Order",
+        back_populates='user',
+        cascade="all, delete",
+        lazy='joined'
+    )
 
     __mapper_args__ = {"eager_defaults": True}
 
