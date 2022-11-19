@@ -21,9 +21,14 @@ user_router = APIRouter(
 @user_router.get('/', response_model=List[UserWithOrder])
 async def get_users(
     session: AsyncSession = Depends(get_session),
-    limit: Optional[str] = None
+    limit: Optional[str] = None,
+    tgid: Optional[int] = None
 ):
-    users = await get_user_list(session=session, model=User, limit=limit)
+    users = await get_user_list(
+        session=session, model=User,
+        limit=limit,
+        tgid=tgid
+    )
     return users
 
 

@@ -15,11 +15,14 @@ from .schemas.users_schema import UserCreate
 async def get_user_list(
     session: AsyncSession,
     model: User,
-    limit: int = None
+    limit: int = None,
+    tgid: int = None
 ):
     query = select(model).options(selectinload(model.orders))
     if limit:
         query = query.limit(limit)
+    if tgid:
+        query = query.where(model.telegram_id == tgid)
     result = await session.execute(query.order_by(model.updated_on.desc()))
     await session.commit()
     return result.scalars().all()
