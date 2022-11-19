@@ -13,7 +13,11 @@ class Order(Base):
     description = Column(String())
     user_id = Column(Integer(), ForeignKey('users.id', ondelete='CASCADE'))
     updated_on = Column(DateTime(), server_default=func.now())
-    user = relationship("User", back_populates='orders', lazy='joined')
+    user = relationship(
+        "User",
+        back_populates='orders',
+        cascade='save-update, merge, delete',
+        lazy='joined')
 
     __mapper_args__ = {"eager_defaults": True}
 
