@@ -4,8 +4,6 @@ services:
   db:
     image : postgres:${DB_TAG}
     restart: always
-    # ports:
-    #   - ${POSTGRES_PORT}:5432
     env_file:
       - .env
 
