@@ -100,7 +100,7 @@ jobs:
             sudo docker-compose up -d --build
 
             sudo docker-compose exec -T api bash start.sh
-            sudo docker-compose run --rm  certbot certonly --webroot --email ${{ secrets.CERTBOT_EMAIL }} --agree-tos --webroot-path /var/www/certbot/ -d khasguz.hopto.org
+            sudo docker-compose run --rm  certbot certonly --webroot --email ${{ secrets.CERTBOT_EMAIL }} --agree-tos --webroot-path /var/www/certbot/ -d khasguz.ddns.net
             sudo docker-compose restart nginx
   send_message:
     runs-on: ubuntu-latest
