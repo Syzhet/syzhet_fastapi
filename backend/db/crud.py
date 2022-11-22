@@ -99,5 +99,7 @@ async def count_obj(
     session: AsyncSession,
     model: Union[User, Order]
 ):
-    result = await session.execute(select([func.count()]).select_from(User).scalar())
+    result = await session.execute(
+        select([func.count()]).select_from(User).scalar()
+    )
     return result
