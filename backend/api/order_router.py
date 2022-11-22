@@ -27,6 +27,12 @@ async def get_orders(
     return orders
 
 
+@order_router.get('/count')
+async def orders_count(session: AsyncSession = Depends(get_session)):
+    count = await count_obj(session=session, model=Order)
+    return {'count_users': f'count orders: {count}'}
+
+
 @order_router.get('/{id}', response_model=OrderGet)
 async def get_order(id: int, session: AsyncSession = Depends(get_session)):
     order = await get_obj(session=session, id=id, model=Order)
@@ -82,9 +88,3 @@ async def delete_order(
         id=id
     )
     return Response(content='Объект удален', media_type="text/plain")
-
-
-@order_router.get('/count')
-async def orders_count(session: AsyncSession = Depends(get_session)):
-    count = await count_obj(session=session, model=Order)
-    return {'count_users': f'count orders: {count}'}
