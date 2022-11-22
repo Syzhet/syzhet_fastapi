@@ -93,3 +93,11 @@ async def delete_obj(
 ):
     await session.execute(delete(model).where(model.id == id))
     await session.commit()
+
+
+async def count_obj(
+    session: AsyncSession,
+    model: Union[User, Order]
+):
+    result = await session.execute(select(model))
+    return result.rowcount

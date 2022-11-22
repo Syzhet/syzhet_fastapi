@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
 from backend.db.crud import (create_obj, delete_obj, get_obj, get_order_list,
-                             update_obj)
+                             update_obj, count_obj)
 from backend.db.models.orders import Order
 from backend.db.schemas.orders_schema import OrderCreate, OrderGet, OrderUpdate
 
@@ -82,3 +82,9 @@ async def delete_order(
         id=id
     )
     return Response(content='Объект удален', media_type="text/plain")
+
+
+@order_router.get('/count')
+async def orders_count(session: AsyncSession = Depends(get_session)):
+    count = await count_obj(session=session, model=Order)
+    return {'count_users': f'count orders: {count}'}
