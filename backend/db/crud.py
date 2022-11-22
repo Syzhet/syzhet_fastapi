@@ -1,7 +1,7 @@
 from typing import Union
 
 from fastapi import HTTPException, status
-from sqlalchemy import delete, select
+from sqlalchemy import delete, select, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -99,6 +99,7 @@ async def count_obj(
     session: AsyncSession,
     model: Union[User, Order]
 ):
-    result = await session.query((model).count())
+    query = select(func.count()).select_from(model)
+    result = await session.execute(query)
     await session.commit()
     return result
