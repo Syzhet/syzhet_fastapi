@@ -32,6 +32,12 @@ async def get_users(
     return users
 
 
+@user_router.get('/count')
+async def users_count(session: AsyncSession = Depends(get_session)):
+    count = await count_obj(session=session, model=User)
+    return {'count_users': f'count users: {count}'}
+
+
 @user_router.get('/{id}', response_model=UserWithOrder)
 async def get_user(id: int, session: AsyncSession = Depends(get_session)):
     user = await get_obj(session=session, id=id, model=User)
@@ -88,9 +94,3 @@ async def delete_user(
         id=id
     )
     return Response(content='Объект удален')
-
-
-@user_router.get('/count')
-async def users_count(session: AsyncSession = Depends(get_session)):
-    count = await count_obj(session=session, model=User)
-    return {'count_users': f'count users: {count}'}
