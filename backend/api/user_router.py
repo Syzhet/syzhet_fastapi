@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.base import get_session
-from backend.db.crud import (create_obj, delete_obj, get_obj, get_user_list,
-                             update_obj, count_obj)
+from backend.db.crud import (count_obj, create_obj, delete_obj, get_obj,
+                             get_user_list, update_obj)
 from backend.db.models.users import User
 from backend.db.schemas.users_schema import UserCreate, UserGet, UserWithOrder
 
