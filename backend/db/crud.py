@@ -102,4 +102,4 @@ async def count_obj(
     query = select(func.count()).select_from(model)
     result = await session.execute(query)
     await session.commit()
-    return result
+    return result.scalar()
