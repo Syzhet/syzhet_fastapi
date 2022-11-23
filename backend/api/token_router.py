@@ -5,8 +5,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..auth.auth import authenticate_admin
 from ..auth.token import create_access_token
 from ..db.base import get_session
-from ..db.schemas.token_schema import Token
 from ..db.models.admin import Admin
+from ..db.schemas.token_schema import Token
 
 token_router = APIRouter(
     prefix='/token',
