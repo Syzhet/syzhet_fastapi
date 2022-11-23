@@ -6,6 +6,8 @@ from ..base import Base
 
 
 class User(Base):
+    """Сlass for representing a user in database."""
+
     __tablename__ = 'users'
 
     id = Column(Integer(), primary_key=True, unique=True)

@@ -6,6 +6,8 @@ from ..base import Base
 
 
 class Order(Base):
+    """Сlass for representing a order in database."""
+
     __tablename__ = 'orders'
 
     id = Column(Integer(), primary_key=True)

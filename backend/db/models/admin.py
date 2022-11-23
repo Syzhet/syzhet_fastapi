@@ -5,6 +5,8 @@ from ..base import Base
 
 
 class Admin(Base):
+    """Сlass for representing a admin in database."""
+
     __tablename__ = 'admins'
 
     id = Column(Integer(), primary_key=True, unique=True)
