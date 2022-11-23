@@ -6,6 +6,7 @@ from ..auth.auth import authenticate_admin
 from ..auth.token import create_access_token
 from ..db.base import get_session
 from ..db.schemas.token_schema import Token
+from ..db.models.admin import Admin
 
 token_router = APIRouter(
     prefix='/token',
@@ -20,7 +21,7 @@ async def get_token(
 ):
     """Handler for the POST path request 'domen/api/v1/token/'."""
 
-    admin = await authenticate_admin(
+    admin: Admin = await authenticate_admin(
         session=session,
         username=data.username,
         password=data.password
@@ -30,7 +31,7 @@ async def get_token(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Bad usernmae or password'
         )
-    access_token = create_access_token(
+    access_token: str = create_access_token(
         data={"sub": admin.username + admin.hashed_password}
     )
     await session.commit()
