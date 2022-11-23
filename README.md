@@ -72,7 +72,7 @@ pip install -r requirements.txt
 
 Запусите приложение командой:
 ```sh
-uvicorn app:app --reload
+uvicorn backend.main:app --reload
 ```
 
 # Запуск проекта в Docker-контейнерах
