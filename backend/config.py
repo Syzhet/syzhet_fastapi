@@ -2,11 +2,15 @@ from pydantic import BaseModel, BaseSettings
 
 
 class AppConfig(BaseModel):
+    """Configuration class for FastAPI application."""
+
     app_host: str
     app_port: str
 
 
 class DbConfig(BaseModel):
+    """Configuration class for databse postgres."""
+
     db_host: str
     database: str
     db_user: str
@@ -15,6 +19,8 @@ class DbConfig(BaseModel):
 
 
 class AdminConfig(BaseModel):
+    """Configuration class for project admin."""
+
     login: str
     password: str
     secret_key: str
@@ -24,6 +30,8 @@ class AdminConfig(BaseModel):
 
 
 class BaseConfig(BaseSettings):
+    """A common configuration class for the entire project."""
+
     app: AppConfig
     db: DbConfig
     admin: AdminConfig
@@ -32,4 +40,7 @@ class BaseConfig(BaseSettings):
         env_nested_delimiter = '__'
 
 
-base_config = BaseConfig(_env_file='infra/.env', _env_file_encoding='utf-8')
+base_config: BaseConfig = BaseConfig(
+    _env_file='infra/.env',
+    _env_file_encoding='utf-8'
+)
