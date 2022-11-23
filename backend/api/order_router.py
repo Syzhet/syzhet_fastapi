@@ -23,7 +23,7 @@ async def get_orders(
     session: AsyncSession = Depends(get_session),
     limit: Optional[str] = None
 ):
-    """Handler for the GET path request 'domen/orders/'."""
+    """Handler for the GET path request 'domen/api/v1/orders/'."""
 
     orders: List[Order] = await get_order_list(
         session=session,
@@ -35,7 +35,7 @@ async def get_orders(
 
 @order_router.get('/count')
 async def orders_count(session: AsyncSession = Depends(get_session)):
-    """Handler for the GET path request 'domen/orders/count/'."""
+    """Handler for the GET path request 'domen/api/v1/orders/count/'."""
 
     count: str = await count_obj(session=session, model=Order)
     return {'count_users': f'count orders: {count}'}
@@ -43,7 +43,7 @@ async def orders_count(session: AsyncSession = Depends(get_session)):
 
 @order_router.get('/{id}', response_model=OrderGet)
 async def get_order(id: int, session: AsyncSession = Depends(get_session)):
-    """Handler for the GET path request 'domen/orders/{id}/'."""
+    """Handler for the GET path request 'domen/api/v1/orders/{id}/'."""
 
     order: Order = await get_obj(session=session, id=id, model=Order)
     return order
@@ -57,7 +57,7 @@ async def create_order(
     data: OrderCreate,
     session: AsyncSession = Depends(get_session)
 ):
-    """Handler for the POST path request 'domen/orders/'."""
+    """Handler for the POST path request 'domen/api/v1/orders/'."""
 
     order: Order = await create_obj(
         session=session,
@@ -77,7 +77,7 @@ async def update_order(
     data: OrderUpdate,
     session: AsyncSession = Depends(get_session)
 ):
-    """Handler for the PUT path request 'domen/orders/{id}/'."""
+    """Handler for the PUT path request 'domen/api/v1/orders/{id}/'."""
 
     return await update_obj(
         session=session,
@@ -95,7 +95,7 @@ async def delete_order(
     id: int,
     session: AsyncSession = Depends(get_session)
 ):
-    """Handler for the DELETE path request 'domen/orders/{id}/'."""
+    """Handler for the DELETE path request 'domen/api/v1/orders/{id}/'."""
 
     await delete_obj(
         session=session,

@@ -11,7 +11,7 @@ from backend.db.schemas.users_schema import UserCreate, UserGet, UserWithOrder
 
 from ..auth.token import check_access_token
 
-user_router = APIRouter(
+user_router: APIRouter = APIRouter(
     prefix='/users',
     tags=['Users'],
     dependencies=[Depends(check_access_token)]
@@ -24,6 +24,8 @@ async def get_users(
     limit: Optional[str] = None,
     tgid: Optional[int] = None
 ):
+    """Handler for the GET path request 'domen/api/v1/users/'."""
+
     users = await get_user_list(
         session=session, model=User,
         limit=limit,
@@ -34,13 +36,17 @@ async def get_users(
 
 @user_router.get('/count')
 async def users_count(session: AsyncSession = Depends(get_session)):
-    count = await count_obj(session=session, model=User)
+    """Handler for the GET path request 'domen/api/v1/users/count/'."""
+
+    count: int = await count_obj(session=session, model=User)
     return {'count_users': f'count users: {count}'}
 
 
 @user_router.get('/{id}', response_model=UserWithOrder)
 async def get_user(id: int, session: AsyncSession = Depends(get_session)):
-    user = await get_obj(session=session, id=id, model=User)
+    """Handler for the GET path request 'domen/api/v1/users/{id}'."""
+
+    user: User = await get_obj(session=session, id=id, model=User)
     return user
 
 
@@ -53,8 +59,9 @@ async def create_user(
     data: UserCreate,
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the POST path request 'domen/api/v1/users/'."""
 
-    user = await create_obj(
+    user: User = await create_obj(
         session=session,
         data=data,
         model=User
@@ -72,6 +79,8 @@ async def update_user(
     data: UserCreate,
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the PUT path request 'domen/api/v1/users/{id}/'."""
+
     return await update_obj(
         session=session,
         model=User,
@@ -88,6 +97,8 @@ async def delete_user(
     id: int,
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the DELETE path request 'domen/api/v1/users/{id}/'."""
+
     await delete_obj(
         session=session,
         model=User,
