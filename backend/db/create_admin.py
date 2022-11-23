@@ -34,7 +34,7 @@ async def create_admin() -> None:
                 logging.info('Admin already existts')
 
 
-async def main():
+async def main() -> None:
     """
     The function of starting the process of creating an administrator
     object in databases.

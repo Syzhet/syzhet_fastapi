@@ -1,4 +1,4 @@
-from typing import Union
+from typing import List, Union
 
 from fastapi import HTTPException, status
 from sqlalchemy import delete, func, select
@@ -17,7 +17,9 @@ async def get_user_list(
     model: User,
     limit: int = None,
     tgid: int = None
-):
+) -> List[User]:
+    """Function of getting a list of user objects from the database."""
+
     query = select(model).options(selectinload(model.orders))
     if limit:
         query = query.limit(limit)
@@ -32,7 +34,9 @@ async def get_order_list(
     session: AsyncSession,
     model: Order,
     limit: int = None
-):
+) -> List[Order]:
+    """Function of getting a list of order objects from the database."""
+
     query = select(model).options(selectinload(model.user))
     if limit:
         query = query.limit(limit)
@@ -45,7 +49,9 @@ async def get_obj(
     session: AsyncSession,
     model: Union[User, Order],
     id: int
-):
+) -> Union[User, Order]:
+    """Function for getting a object from a database by id."""
+
     object = await session.get(model, id)
     if not object:
         raise HTTPException(
@@ -60,7 +66,9 @@ async def create_obj(
     session: AsyncSession,
     model: Union[User, Order],
     data: Union[UserCreate, OrderCreate]
-):
+) -> Union[User, Order]:
+    """Function of creating an object in the database."""
+
     object = model(**data.dict())
     session.add(object)
     try:
@@ -78,7 +86,9 @@ async def update_obj(
     model: Union[User, Order],
     data: UserCreate,
     id: int
-):
+) -> Union[User, Order]:
+    """Function of updating an object in the database."""
+
     obj = await get_obj(session=session, id=id, model=model)
     for field, value in data:
         setattr(obj, field, value)
@@ -90,7 +100,9 @@ async def delete_obj(
     session: AsyncSession,
     model: Union[User, Order],
     id: int
-):
+) -> None:
+    """Function of deleting an object from the database."""
+
     await session.execute(delete(model).where(model.id == id))
     await session.commit()
 
@@ -98,7 +110,9 @@ async def delete_obj(
 async def count_obj(
     session: AsyncSession,
     model: Union[User, Order]
-):
+) -> int:
+    """Function of counting the number of records in the database table."""
+
     query = select(func.count()).select_from(model)
     result = await session.execute(query)
     await session.commit()
