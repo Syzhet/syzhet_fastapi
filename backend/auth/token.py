@@ -22,23 +22,24 @@ DELIMETR = base_config.admin.delimetr
 
 def create_access_token(
     data: dict,
-):
+) -> str:
     """
-    Создание токена доступа с использованием,
-    SECRET_KEY и алгоритма шифрования: ALGORITHM)
+    Creating an access token using
+    SECRET_KEY and the encryption algorithm: ALGORITHM.
     """
 
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=TOKEN_EXPIRE)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt: str = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 
 async def check_access_token(
     token: str = Depends(oauth2_scheme),
     session: AsyncSession = Depends(get_session)
-):
+) -> Admin:
+    """Verifying the validity of the token."""
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -46,18 +47,18 @@ async def check_access_token(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload: dict = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         userdata: List[str] = payload.get("sub")
     except JWTError:
         raise credentials_exception
     if not userdata:
         raise credentials_exception
-    username = userdata.split(DELIMETR)[0]
+    username: str = userdata.split(DELIMETR)[0]
     query = select(Admin).where(
         Admin.username == username,
     )
     obj = await session.execute(query)
-    admin = obj.scalars().first()
+    admin: Admin = obj.scalars().first()
     if not admin:
         raise credentials_exception
     return admin

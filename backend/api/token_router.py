@@ -18,6 +18,8 @@ async def get_token(
     data: OAuth2PasswordRequestForm = Depends(),
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the POST path request 'domen/api/v1/token/'."""
+
     admin = await authenticate_admin(
         session=session,
         username=data.username,
