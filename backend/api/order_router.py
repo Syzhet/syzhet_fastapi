@@ -11,7 +11,7 @@ from backend.db.schemas.orders_schema import OrderCreate, OrderGet, OrderUpdate
 
 from ..auth.token import check_access_token
 
-order_router = APIRouter(
+order_router: APIRouter = APIRouter(
     prefix='/orders',
     tags=['Orders'],
     dependencies=[Depends(check_access_token)]
@@ -23,19 +23,29 @@ async def get_orders(
     session: AsyncSession = Depends(get_session),
     limit: Optional[str] = None
 ):
-    orders = await get_order_list(session=session, model=Order, limit=limit)
+    """Handler for the GET path request 'domen/orders/'."""
+
+    orders: List[Order] = await get_order_list(
+        session=session,
+        model=Order,
+        limit=limit
+    )
     return orders
 
 
 @order_router.get('/count')
 async def orders_count(session: AsyncSession = Depends(get_session)):
-    count = await count_obj(session=session, model=Order)
+    """Handler for the GET path request 'domen/orders/count/'."""
+
+    count: str = await count_obj(session=session, model=Order)
     return {'count_users': f'count orders: {count}'}
 
 
 @order_router.get('/{id}', response_model=OrderGet)
 async def get_order(id: int, session: AsyncSession = Depends(get_session)):
-    order = await get_obj(session=session, id=id, model=Order)
+    """Handler for the GET path request 'domen/orders/{id}/'."""
+
+    order: Order = await get_obj(session=session, id=id, model=Order)
     return order
 
 
@@ -47,8 +57,9 @@ async def create_order(
     data: OrderCreate,
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the POST path request 'domen/orders/'."""
 
-    order = await create_obj(
+    order: Order = await create_obj(
         session=session,
         data=data,
         model=Order
@@ -66,6 +77,8 @@ async def update_order(
     data: OrderUpdate,
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the PUT path request 'domen/orders/{id}/'."""
+
     return await update_obj(
         session=session,
         model=Order,
@@ -82,6 +95,8 @@ async def delete_order(
     id: int,
     session: AsyncSession = Depends(get_session)
 ):
+    """Handler for the DELETE path request 'domen/orders/{id}/'."""
+
     await delete_obj(
         session=session,
         model=Order,
