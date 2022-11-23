@@ -16,13 +16,15 @@ logging.basicConfig(
     )
 )
 
-ADMIN_LOGIN = base_config.admin.login
-ADMIN_PASSWORD = base_config.admin.password
+ADMIN_LOGIN: str = base_config.admin.login
+ADMIN_PASSWORD: str = base_config.admin.password
 
 
-async def create_admin():
-    hashed_password = get_password_hash(ADMIN_PASSWORD)
-    admin = Admin(username=ADMIN_LOGIN, hashed_password=hashed_password)
+async def create_admin() -> None:
+    """Creates an administrator object in the database."""
+
+    hashed_password: str = get_password_hash(ADMIN_PASSWORD)
+    admin: Admin = Admin(username=ADMIN_LOGIN, hashed_password=hashed_password)
     async with async_session() as session:
         async with session.begin():
             session.add(admin)
@@ -33,6 +35,11 @@ async def create_admin():
 
 
 async def main():
+    """
+    The function of starting the process of creating an administrator
+    object in databases.
+    """
+
     await create_admin()
     print('create admin ok')
 
