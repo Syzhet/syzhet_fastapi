@@ -38,7 +38,7 @@ async def orders_count(session: AsyncSession = Depends(get_session)):
     """Handler for the GET path request 'domen/api/v1/orders/count/'."""
 
     count: str = await count_obj(session=session, model=Order)
-    return {'count_users': f'count orders: {count}'}
+    return {'count_orders': f'count orders: {count}'}
 
 
 @order_router.get('/{id}', response_model=OrderGet)
