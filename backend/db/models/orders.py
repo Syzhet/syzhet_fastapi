@@ -22,6 +22,8 @@ class Order(Base):
     user = relationship(
         "User",
         back_populates='orders',
+        cascade='save-update, merge, delete',
+        passive_deletes=True,
         lazy='joined')
 
     __mapper_args__ = {"eager_defaults": True}
